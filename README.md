@@ -1,6 +1,6 @@
 Algorithms
 ========
-This is my exercise for algorithms. 
+This is my exercise for algorithms.  
 progress:&emsp;(剑指offer: 0/66)&emsp;(经典LeetCode: 0/148)
 
 ## 剑指offer
