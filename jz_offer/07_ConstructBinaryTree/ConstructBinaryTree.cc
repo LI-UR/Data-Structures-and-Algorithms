@@ -4,6 +4,7 @@
  * date:   2019-07-18 05:30:32
  **********************************************/
 #include <iostream>
+#include <exception>
 #include "../Utilities/BiTree.h"
 using namespace std;
 
@@ -17,20 +18,29 @@ BiTreeNode* Construct(int *preorder, int *inorder, int length) {
     if(nullptr == preorder || nullptr ==  inorder || length <= 0) {
         return nullptr;
     }
-
+    
     //在中序序列中找到根节点
     int indexOfRoot = 0;
-    while(inorder[indexOfRoot] != preorder[0]){
+    while(indexOfRoot < length && inorder[indexOfRoot] != preorder[0]){
         ++indexOfRoot;
+    }
+    if(indexOfRoot == length) { //中序序列中无对应根节点
+        cout << "Invalid Input!!!" << endl;
+        exit(-1);
     }
     
     int lengthOfLeft = indexOfRoot;
     int lengthOfRight = length - indexOfRoot - 1;
 
-    BiTreeNode *pRoot = new BiTreeNode;
-    pRoot->value = preorder[0];
-    pRoot->left = Construct(preorder + 1, inorder, lengthOfLeft);
-    pRoot->right = Construct(preorder + lengthOfLeft + 1, inorder + lengthOfLeft + 1, lengthOfRight);
+    BiTreeNode *pRoot = new BiTreeNode{preorder[0], nullptr, nullptr};
+
+    if(lengthOfLeft) {
+        pRoot->left = Construct(preorder + 1, inorder, lengthOfLeft);
+    }
+
+    if(lengthOfRight) {
+        pRoot->right = Construct(preorder + lengthOfLeft + 1, inorder + lengthOfLeft + 1, lengthOfRight);
+    }
 
     return pRoot;
 }
