@@ -38,6 +38,7 @@ private:
     }
 
     static void destroy() {
+        cout << "destroy()" << endl;
         if(m_instance) {
             delete m_instance;
         }
